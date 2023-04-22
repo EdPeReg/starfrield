@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 import random
 
-# TODO: When self.depth = width you can see more stars but they don't increment the speed
-# TODO: Analize why pz
-
 class Star:
     """
     This class represent a start with some given attributes
@@ -23,7 +20,8 @@ class Star:
         # The reason why we use -width and -height it is because the translation
         # if we start from 0, it will start from the center, so no stars will be drawn
         # beyond the center, we want the stars all over the place, for that we give
-        # negative values
+        # negative values. In this manner there is a random distribution and we get a better 
+        # visual effect in the stars
         self.x = random.randint(-width, width)
         self.y = random.randint(-height, height)
         self.speed = 20

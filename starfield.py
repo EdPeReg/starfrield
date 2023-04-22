@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-# TODO: Make that more stars appear in the screen, don't increment the amount of stars
-# for that dont map_range the stars, use te oriinal (x,y) values, more stars will appear
-# but it won't move because it won't have the new position (I guess)
-
 import arcade
 
 from Star import Star
@@ -37,7 +33,8 @@ def map_range(value: float, min_val: float, max_val:
 class Program(arcade.Window):
     def __init__(self, width: int, height: int, title: str):
         self.stars = []
-        self.TOTAL_STARS = 800
+        self.speed_change = 10
+        self.TOTAL_STARS = 200
         self.WIDTH = width
         self.HEIGHT = height
 
@@ -50,21 +47,14 @@ class Program(arcade.Window):
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed """
         
-        # TODO: Check this, is it necessary to iterate again in our stars?
         # TODO: Increase/decrease the speed when you left the key pushed
-
-        # Update each star speed when left and right is press, 
-        # left reduce the speed and right increase the speed
-        for star in self.stars:
-            if key == arcade.key.LEFT:
-                star.speed -= 10
-
-                # For each star, when we are decrementing the speed, we can get a negative value,
-                # if this happens the stars will come back, just set the speed to 0 to not move the stars
-                if star.speed < 1:
-                    star.speed = 0
-            elif key == arcade.key.RIGHT:
-                star.speed += 10
+        # Update the speed when left and right are pressed, 
+        if key == arcade.key.LEFT:
+            # Decrease speed to the left
+            self.speed_change -= 10
+        elif key == arcade.key.RIGHT:
+            # Increase speed to the right
+            self.speed_change += 10
 
     def on_draw(self):
         """Called once per frame to render everything"""
@@ -72,11 +62,11 @@ class Program(arcade.Window):
         arcade.start_render()
 
         for star in self.stars:
-            # We don't want to divide by zero, there is a point where z reach 0
+            # We don't want to divide by zero, there is a point where depth reach 0
             star.reset_values(self.width, self.height)
 
             # The value is divided by z and map into a new value from 0 to the edge, given
-            # a new position
+            # a new position according to the depth 
             starx = map_range(star.x / star.depth, 0, 1, 0, self.WIDTH)
             stary = map_range(star.y / star.depth, 0, 1, 0, self.HEIGHT)
 
@@ -92,6 +82,10 @@ class Program(arcade.Window):
             arcade.draw_ellipse_filled(starx + (self.width / 2), stary + (self.height / 2),
                                        width_height, width_height, arcade.color.WHITE)
 
+
+            # arcade.draw_ellipse_filled(star.x + (self.width / 2), star.y + (self.height / 2),
+            #                            width_height, width_height, arcade.color.WHITE)
+
             # Map the previous (x,y) to a new value from 0 to width and height of the window 
             prevx = map_range(star.x / star.prevz, 0, 1, 0, self.width)
             prevy = map_range(star.y / star.prevz, 0, 1, 0, self.height)
@@ -103,7 +97,7 @@ class Program(arcade.Window):
             star.prevz = star.depth
 
             # When we decrement the stars move
-            star.depth -= star.speed
+            star.depth -= star.speed + self.speed_change
 
             # Draw a line where it was previously to where it is now
             arcade.draw_line(prevx + (self.width / 2), prevy + (self.height / 2), 
