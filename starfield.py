@@ -4,7 +4,6 @@
 # for that dont map_range the stars, use te oriinal (x,y) values, more stars will appear
 # but it won't move because it won't have the new position (I guess)
 
-# TODO: Control de speed using the mouse or keys
 # TODO: Check why the pz
 
 import arcade
@@ -50,15 +49,20 @@ class Program(arcade.Window):
     def setup(self):
         self.stars = [Star(self.WIDTH, self.HEIGHT) for _ in range(self.TOTAL_STARS)]
 
-    # def on_key_press(self, key, modifiers):
-    #     """Called whenever a key is pressed """
-    #     for star in self.stars:
-    #         if key == arcade.key.LEFT:
-    #             print("inside left")
-    #             star.speed -= 1
-    #         if key == arcade.key.RIGHT:
-    #             print("inside right")
-    #             star.speed += 1
+    def on_key_press(self, key, modifiers):
+        """Called whenever a key is pressed """
+        
+        # TODO: Check this, is it necessary to iterate again in our stars?
+        for star in self.stars:
+            if key == arcade.key.LEFT:
+                star.speed -= 10
+
+                # For each star, when we are decrementing the speed, we can get a negative value,
+                # if this happens the stars will come back, just set the speed to 0 to not move the stars
+                if star.speed < 1:
+                    star.speed = 0
+            if key == arcade.key.RIGHT:
+                star.speed += 10
 
     def on_draw(self):
         """Called once per frame to render everything"""

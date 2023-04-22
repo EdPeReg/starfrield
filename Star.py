@@ -51,5 +51,3 @@ class Star:
             self.x = random.randint(-width, width)
             self.y = random.randint(-height, height)
             self.pz = self.z
-
-    # def update(self):
