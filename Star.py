@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import random
 
-# TODO: When self.z = width you can see more stars but they don't increment the speed
+# TODO: When self.depth = width you can see more stars but they don't increment the speed
 # TODO: Analize why pz
 
 class Star:
@@ -28,10 +28,12 @@ class Star:
         self.y = random.randint(-height, height)
         self.speed = 20
 
-        # This z value is use to disperse the stars, each star will have
-        # a different value
-        self.z = random.randint(0, width)
-        self.pz = self.z
+        # This depth value is use to disperse the stars, each star will have
+        # a different value, so it works like in a 3D space, where the stars that
+        # are far away have bigger depth value and stars that are closer have smaller depth value
+        # The depth is used to controll the speed and star size
+        self.depth = random.randint(0, width)
+        self.prevz = self.depth
     
     def reset_values(self, width: int, height: int):
         """
@@ -46,8 +48,8 @@ class Star:
                 Height of the start
         """
 
-        if self.z < 1:
-            self.z = width
+        if self.depth < 1:
+            self.depth = width
             self.x = random.randint(-width, width)
             self.y = random.randint(-height, height)
-            self.pz = self.z
+            self.prevz = self.depth
