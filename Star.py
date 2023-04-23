@@ -121,7 +121,7 @@ class Star:
         # Make the star bigger when is closer and smaller with it's away
         # We use z because z controls the speed, so we are interested in that
         # this fix the illusion when the stars pop up
-        width_height = map_range(self.depth, 0, width, 10, 0)
+        width_height = map_range(self.depth, 0, width, 14, 0)
 
         screen_x, screen_y = translation(screen_x, screen_y, width, height)
 
@@ -145,7 +145,6 @@ class Star:
         # we have some negative speed, stop the stars
         if speed_change < 1:
             self.speed = 0
-            speed_change = 0
 
         # When we decrement the star, it will move
         self.depth -= self.speed + speed_change

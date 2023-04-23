@@ -27,6 +27,10 @@ class Program(arcade.Window):
         if key == arcade.key.LEFT:
             # Decrease speed to the left
             self.speed_change -= 10
+
+            # Negative speed, we want to stop
+            if self.speed_change < 1:
+                self.speed_change = 0
         elif key == arcade.key.RIGHT:
             # Increase speed to the right
             self.speed_change += 10
