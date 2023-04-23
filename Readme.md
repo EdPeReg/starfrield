@@ -4,7 +4,7 @@ This is a simple program that emulates a **STARFIELD**, it is inspire from [Codi
 
 Basically the stars will move at some speed, creating the ilusion of stars from the center. <br>
 
-TODO: Insert gif <br>
+[Demostration](https://github.com/EdPeReg/starfrield/blob/main/demostration.gif)
 
 ## How to run it
 
