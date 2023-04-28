@@ -32,7 +32,6 @@ This can be enhanced significantly, but for the moment this are the things I wou
 
 - Fixbug where you stop the stars, some stars will disappear <br>
 - Make more stars to be draw without incrementing the stars amount from the code <br>
-- Hold key LEFT or RIGHT to decrement or increment the speed, you need to press it multiple times <br>
 - Add Interstellar theme music <br>
 
 # References
