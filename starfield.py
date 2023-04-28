@@ -12,28 +12,46 @@ class Program(arcade.Window):
         self.TOTAL_STARS = 200
         self.WIDTH = width
         self.HEIGHT = height
+        self.is_key_left = False
+        self.is_key_right = False
 
         super().__init__(width, height, title)
         arcade.set_background_color(arcade.color.BLACK)
 
     def setup(self):
         """ Set up the game and initialize the variables """
+
         self.stars = [Star(self.WIDTH, self.HEIGHT) for _ in range(self.TOTAL_STARS)]
 
-    def on_key_press(self, key, modifiers):
-        """Called whenever a key is pressed """
-        # TODO: Increase/decrease the speed when you left the key pushed
-        # Update the speed when left and right are pressed,
-        if key == arcade.key.LEFT:
+    def on_update(self, delta_time):
+        """ Update objects and game logic """
+
+        if self.is_key_right:
+            # Increase speed to the right
+            self.speed_change += 10 * delta_time
+        elif self.is_key_left:
             # Decrease speed to the left
-            self.speed_change -= 10
+            self.speed_change -= 10 * delta_time
 
             # Negative speed, we want to stop
             if self.speed_change < 1:
                 self.speed_change = 0
+
+    def on_key_press(self, key, modifiers):
+        """Called whenever a key is pressed """
+
+        if key == arcade.key.LEFT:
+            self.is_key_left = True
         elif key == arcade.key.RIGHT:
-            # Increase speed to the right
-            self.speed_change += 10
+            self.is_key_right = True
+    
+    def on_key_release(self, key, modifiers):
+        """ Called whenever a key is released """
+
+        if key == arcade.key.LEFT:
+            self.is_key_left = False
+        elif key == arcade.key.RIGHT:
+            self.is_key_right = False
 
     def on_draw(self):
         """Called once per frame to render everything"""
